@@ -8,9 +8,14 @@ app.use(cors());
 
 const upload = multer();
 
-app.post("/convert", upload.single("file"), async (req, res) => {
+app.get("/", (req, res) => {
+    res.send("PDF Converter API Running");
+});
+
+app.post("/convert", upload.single("file"), (req, res) => {
 
     if (!req.file) {
+
         return res.status(400).json({
             error: "No file uploaded"
         });
@@ -21,11 +26,6 @@ app.post("/convert", upload.single("file"), async (req, res) => {
         message: "File received successfully",
         filename: req.file.originalname
     });
-
-});
-
-app.get("/", (req, res) => {
-    res.send("PDF Converter API Running");
 });
 
 const PORT = process.env.PORT || 3000;
